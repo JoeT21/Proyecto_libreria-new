@@ -5,10 +5,7 @@ import com.distribuida.model.Categoria;
 import com.distribuida.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +30,28 @@ public class CategoriaController {
         }
         return ResponseEntity.ok(categoria);
     }
+
+    @PostMapping
+    public ResponseEntity<Categoria> save(@RequestBody Categoria categoria){
+        Categoria categoriaNueva = categoriaService.save(categoria);
+        return ResponseEntity.ok(categoriaNueva);
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<Categoria> update(@PathVariable int id, @RequestBody Categoria categoria){
+        Categoria categoriaActualizada = categoriaService.update(id, categoria);
+        if (categoriaActualizada == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(categoriaActualizada);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable int id){
+        categoriaService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 }
