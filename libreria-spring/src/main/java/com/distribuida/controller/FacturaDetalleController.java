@@ -1,14 +1,14 @@
 package com.distribuida.controller;
 
+import com.distribuida.model.Factura;
 import com.distribuida.model.FacturaDetalle;
 import com.distribuida.service.FacturaDetalleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -33,5 +33,31 @@ public class FacturaDetalleController {
         return ResponseEntity.ok(detalle);
     }
 
+    @PostMapping
+    public ResponseEntity<FacturaDetalle> save (@RequestBody FacturaDetalle detalle){
+        FacturaDetalle detalleNuevo = facturaDetalleService.save(detalle);
+        return ResponseEntity.ok(detalleNuevo);
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<FacturaDetalle> update(@PathVariable int id , @RequestBody FacturaDetalle detalle){
+        FacturaDetalle detalleActualizado = facturaDetalleService.update(id, detalle);
+        if (detalleActualizado == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(detalleActualizado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable int id){
+        facturaDetalleService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/factura/{facturaId}")
+    public ResponseEntity<List<FacturaDetalle>> finByFacturaId(@PathVariable int facturaId){
+        List<FacturaDetalle> detalles = Collections.singletonList(facturaDetalleService.findById(facturaId));
+        return ResponseEntity.ok(detalles);
+    }
 
 }
