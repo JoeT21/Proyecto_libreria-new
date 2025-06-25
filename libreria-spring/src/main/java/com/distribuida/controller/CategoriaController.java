@@ -23,7 +23,7 @@ public class CategoriaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Categoria> findOne(@PathVariable int id){
-        Categoria categoria = CategoriaService.findOne(id);
+        Categoria categoria = categoriaService.findOne(id);
         if (categoria == null){
             return ResponseEntity.notFound().build();
 
