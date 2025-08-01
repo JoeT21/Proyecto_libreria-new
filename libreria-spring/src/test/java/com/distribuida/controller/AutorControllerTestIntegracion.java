@@ -45,20 +45,20 @@ public class AutorControllerTestIntegracion {
                 .andExpect(jsonPath("$[0].apellido").value("Galbez"));
     }
 
-@Test
+    @Test
     public void testSave() throws Exception{
         Autor autor = new Autor(1,"Roberto","Aña","Brasil","Sou me","09986655","ymn@gmail.com");
 
         Mockito.when(autorService.save(any(Autor.class))).thenReturn(autor);
 
         mockMvc.perform(post("/autor")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(autor)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(autor)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nombre").value("Roberto"))
                 .andExpect(jsonPath("$.apellido").value("Aña"));
 
-}
+    }
     @Test
     public void testDelete() throws Exception {
         mockMvc.perform(delete("/autor/1"))
@@ -69,4 +69,3 @@ public class AutorControllerTestIntegracion {
 
 
 }
-

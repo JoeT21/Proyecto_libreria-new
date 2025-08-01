@@ -15,7 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.http.RequestEntity.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -66,8 +67,8 @@ public class FacturaControllerTestIntegracion {
                 .andExpect(status().isNotFound());
     }
 
- @Test
- public void testSave() throws Exception{
+    @Test
+    public void testSave() throws Exception {
         Factura factura = new Factura();
         factura.setIdFactura(0);
         factura.setTotal(150.00);
@@ -75,11 +76,12 @@ public class FacturaControllerTestIntegracion {
         Mockito.when(facturaService.save(any(Factura.class))).thenReturn(factura);
 
         mockMvc.perform(post("/api/facturas")
-                .contentType(MediaType.APPLICATION_JSON)
-                .countent(objectMapper.writeValueAsString(factura)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(factura)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.total").value(150.00));
- }
+    }
+
 
     @Test
     public void testDelete() throws Exception {
