@@ -9,7 +9,7 @@ import javax.xml.stream.events.EntityReference;
 import java.util.List;
 
 @RestController
-@RequestMapping("/libros")
+@RequestMapping("/api/libros")
 
 public class LibroController {
     @Autowired
@@ -49,11 +49,11 @@ public class LibroController {
         return ResponseEntity.ok(libroActualizado);
     }
 
-   @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id){
         libroService.delete(id);
         return ResponseEntity.noContent().build();
-   }
+    }
 
 
 
