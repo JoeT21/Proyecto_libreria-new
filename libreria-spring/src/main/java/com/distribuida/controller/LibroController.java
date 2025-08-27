@@ -9,7 +9,7 @@ import javax.xml.stream.events.EntityReference;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/libros")
+@RequestMapping("/api/libro")
 
 public class LibroController {
     @Autowired
